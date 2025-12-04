@@ -1,15 +1,11 @@
-
 const express = require('express');
 const router = express.Router();
 
-
-const goalRoutes = require('./goalRoutes');
 const userRoutes = require('./userRoutes');
+const goalRoutes = require('./goalRoutes');
 
-
-router.use(goalRoutes);
-router.use(userRoutes);
-
+router.use('/user', userRoutes);
+router.use('/goals', goalRoutes);
 
 router.get('/health', (req, res) => {
   res.json({

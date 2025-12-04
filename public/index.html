@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appli Réalisez vos souhaits</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-star"></i>
+                    <span>Réalisez vos souhaits</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="dashboard">
+                            <i class="fas fa-home"></i> Tableau de bord
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-page="goals">
+                            <i class="fas fa-bullseye"></i> Mes objectifs
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-page="monthly">
+                            <i class="fas fa-calendar-alt"></i> Souhaits par mois
+                        </a></li>
+                        <li><a href="#" class="nav-link" data-page="profile">
+                            <i class="fas fa-user"></i> Mon profil
+                        </a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-profile">
+                    <div class="user-avatar" id="user-avatar">J</div>
+                    <div class="user-info">
+                        <span id="user-name">Chargement...</span>
+                        <small id="user-streak">🔥 Séries: 0 jours</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="alert-container" class="container"></div>
+
+    <main class="container">
+        <section id="dashboard-page" class="page active">
+            <div class="page-header">
+                <div>
+                    <h1>Tableau de bord</h1>
+                    <p id="dashboard-subtitle">Suivez votre progression et restez motivé</p>
+                </div>
+                <button class="btn btn-accent" onclick="syncDevice()">
+                    <i class="fas fa-sync-alt"></i> Synchroniser
+                </button>
+            </div>
+            
+            <div class="stats-grid" id="stats-container">
+
+            </div>
+            
+
+            <div class="section-header">
+                <h2><i class="fas fa-fire"></i> Objectifs du mois</h2>
+                <p>Nous sommes après le 15 du mois, il devient urgent de finaliser vos objectifs</p>
+            </div>
+            
+            <div class="cards-grid" id="active-goals-container">
+
+            </div>
+            
+
+            <div class="section-header">
+                <h2><i class="fas fa-arrow-right"></i> Prochains défis</h2>
+                <p>Préparez-vous pour les mois à venir</p>
+            </div>
+            
+            <div class="mini-cards-grid" id="upcoming-goals-container">
+
+            </div>
+        </section>
+
+
+        <section id="goals-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Mes objectifs</h1>
+                    <p>Fixez vos objectifs et donnez-vous les moyens de les atteindre !</p>
+                </div>
+                <button class="btn btn-accent" onclick="showNewGoalForm()">
+                    <i class="fas fa-plus"></i> Nouvel objectif
+                </button>
+            </div>
+            
+
+            <div class="card" id="new-goal-form" style="display: none; margin-bottom: 2rem;">
+                <div class="card-header">
+                    <h3><i class="fas fa-magic"></i> Créer un nouvel objectif</h3>
+                </div>
+                <div class="card-body">
+                    <form id="goal-form" onsubmit="createGoal(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="goal-title">Nom de l'objectif *</label>
+                                <input type="text" id="goal-title" class="form-control" 
+                                       placeholder="Ex: Lire 10 livres cette année" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-category">Catégorie *</label>
+                                <select id="goal-category" class="form-control" required>
+                                    <option value="">Sélectionner</option>
+                                    <option value="sante">Santé & bien-être</option>
+                                    <option value="apprentissage">Apprentissage</option>
+                                    <option value="social">Social & relations</option>
+                                    <option value="loisir">Loisir & créativité</option>
+                                    <option value="personnel">Personnel</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="goal-description">Description</label>
+                                <textarea id="goal-description" class="form-control" 
+                                          placeholder="Décrivez votre objectif..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="goal-target">Valeur cible (optionnel)</label>
+                                <input type="number" id="goal-target" class="form-control" 
+                                       placeholder="Ex: 10000">
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-unit">Unité</label>
+                                <input type="text" id="goal-unit" class="form-control" 
+                                       placeholder="pas, pages, jours, etc.">
+                            </div>
+                            <div class="form-group">
+                                <label for="goal-daily">Objectif quotidien</label>
+                                <input type="number" id="goal-daily" class="form-control" 
+                                       placeholder="Ex: 1000">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="hideNewGoalForm()">
+                                Annuler
+                            </button>
+                            <button type="submit" class="btn btn-accent">
+                                <i class="fas fa-check"></i> Créer l'objectif
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="section-header">
+                <h2><i class="fas fa-list-check"></i> Mes objectifs en cours</h2>
+                <p>Suivez votre progression sur vos challenges actuels</p>
+            </div>
+            
+            <div class="cards-grid" id="personal-goals-container">
+
+            </div>
+            
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-users"></i> Parrainage</h3>
+                    <p>Inciter votre entourage à participer</p>
+                </div>
+                <div class="card-body">
+                    <p>Partagez votre motivation en parrainant des personnes de votre entourage.</p>
+                    <p>Vous gagnez des badges supplémentaires pour chaque personne motivée !</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="invite-email">Adresse email à inviter</label>
+                            <input type="email" id="invite-email" class="form-control" 
+                                   placeholder="exemple@email.com">
+                        </div>
+                        <div class="form-group" style="margin-top: 1.8rem;">
+                            <button class="btn btn-accent" onclick="inviteFriend()">
+                                <i class="fas fa-paper-plane"></i> Inviter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="monthly-page" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Souhaits par mois</h1>
+                    <p>Découvrez les objectifs suggérés pour chaque mois de l'année</p>
+                </div>
+                <div class="year-selector">
+                    <span>Année 2025</span>
+                </div>
+            </div>
+            
+            <div class="monthly-grid" id="monthly-goals-container">
+            </div>
+
+            <div class="inspiration-card">
+                <div class="inspiration-content">
+                    <i class="fas fa-quote-left"></i>
+                    <p>Chaque nouvelle année est une page blanche. Écrivez votre histoire avec des actions, pas seulement des intentions.</p>
+                    <i class="fas fa-quote-right"></i>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="profile-page" class="page">
+            <div class="page-header">
+                <h1>Mon profil</h1>
+                <p>Gérez vos informations personnelles et vos préférences</p>
+            </div>
+            
+            <div class="profile-layout">
+
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user-edit"></i> Informations personnelles</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="profile-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profile-name">Nom complet *</label>
+                                    <input type="text" id="profile-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-email">Email *</label>
+                                    <input type="email" id="profile-email" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="profile-phone">Téléphone</label>
+                                    <input type="tel" id="profile-phone" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-birthdate">Date de naissance</label>
+                                    <input type="date" id="profile-birthdate" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-accent">
+                                    <i class="fas fa-save"></i> Mettre à jour
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-cog"></i> Préférences</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="pref-theme">Thème de l'application</label>
+                            <select id="pref-theme" class="form-control">
+                                <option value="light">Clair</option>
+                                <option value="dark">Sombre</option>
+                                <option value="auto">Automatique</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pref-language">Langue</label>
+                            <select id="pref-language" class="form-control">
+                                <option value="fr">Français</option>
+                                <option value="en">Anglais</option>
+                                <option value="es">Espagnol</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pref-notifications">Notifications</label>
+                            <select id="pref-notifications" class="form-control">
+                                <option value="daily">Quotidiennes</option>
+                                <option value="weekly">Hebdomadaires</option>
+                                <option value="monthly">Mensuelles</option>
+                                <option value="none">Aucune</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pref-device">Appareil connecté</label>
+                            <select id="pref-device" class="form-control">
+                                <option value="apple-watch">Apple Watch</option>
+                                <option value="fitbit">Fitbit</option>
+                                <option value="garmin">Garmin</option>
+                                <option value="none">Aucun</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-outline" onclick="savePreferences()">
+                            <i class="fas fa-check-circle"></i> Enregistrer
+                        </button>
+                    </div>
+                </div>
+                
+        
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-trophy"></i> Mes réalisations</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="stats-profile">
+                            <div class="stat-item">
+                                <div class="stat-icon stat-1">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="stat-total">0</h3>
+                                    <p>Objectifs totaux</p>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-item">
+                                <div class="stat-icon stat-2">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="stat-completed">0</h3>
+                                    <p>Objectifs atteints</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="badges-container" id="badges-container">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-star"></i> Réalisez vos souhaits</h3>
+                    <p>Une application pour suivre vos objectifs et transformer vos bonnes résolutions en réalité.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-circle-info"></i> Comment ça marche</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Confidentialité</a></li>
+                        <li><a href="#"><i class="fas fa-file-contract"></i> Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> contact@applisouhaits.fr</li>
+                        <li><i class="fas fa-phone"></i> +33 1 23 45 67 89</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Paris, France</li>
+                        <li><i class="fas fa-graduation-cap"></i> Projet M1 Info - Mr Touati</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Appli Réalisez vos souhaits - Projet DevOps M1 Info. Tous droits réservés.</p>
+                <p>Date limite de dépôt : 4 Décembre 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof App !== 'undefined') {
+                App.init();
+            }
+        });
+    </script>
+</body>
+</html>

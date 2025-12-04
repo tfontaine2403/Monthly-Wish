@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const goalController = require('../controllers/goalController');
+const goalController = require('../controller/goalController');
 
 router.get('/goals', goalController.getUserGoals);
 router.get('/goals/:id', goalController.getGoal);

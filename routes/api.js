@@ -5,7 +5,7 @@ const userRoutes = require('./userRoutes');
 const goalRoutes = require('./goalRoutes');
 
 router.use('/user', userRoutes);
-router.use('/goals', goalRoutes);
+router.use('/', goalRoutes);
 
 router.get('/health', (req, res) => {
   res.json({

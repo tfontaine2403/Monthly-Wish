@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appli Réalisez vos souhaits</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5d6afb;
+            --secondary: #8a74f9;
+            --accent: #ff7eb3;
+            --light: #f8f9ff;
+            --dark: #2a2d3e;
+            --success: #4cd964;
+            --warning: #ffcc00;
+            --danger: #ff3b30;
+            --gray: #8e8e93;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            opacity: 0.9;
+        }
+
+        nav a.active {
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main content */
+        main {
+            padding: 2rem 0;
+        }
+
+        .page-title {
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .card-header h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e6e6e6;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        /* Dashboard stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .stat-1 { background-color: var(--primary); }
+        .stat-2 { background-color: var(--accent); }
+        .stat-3 { background-color: var(--success); }
+        .stat-4 { background-color: var(--warning); }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background: linear-gradient(to right, var(--accent), #ff9ec5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        /* Months grid */
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .month-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .month-card:hover {
+            transform: scale(1.03);
+        }
+
+        .month-header {
+            padding: 1.5rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .month-header h3 {
+            font-size: 1.5rem;
+        }
+
+        .month-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .month-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .status-completed { background-color: rgba(76, 217, 100, 0.2); color: var(--success); }
+        .status-in-progress { background-color: rgba(93, 106, 251, 0.2); color: var(--primary); }
+        .status-not-started { background-color: rgba(142, 142, 147, 0.2); color: var(--gray); }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .page-title h1 {
+                font-size: 2rem;
+            }
+            
+            .cards-grid, .months-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Page-specific styles */
+        #dashboard { display: block; }
+        #objectifs, #mois, #profil { display: none; }
+
+        /* Active page styling */
+        .active-page {
+            display: block !important;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-star"></i>
+                    <span>Réalisez vos souhaits</span>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="dashboard">Tableau de bord</a></li>
+                        <li><a href="#" class="nav-link" data-page="objectifs">Mes objectifs</a></li>
+                        <li><a href="#" class="nav-link" data-page="mois">Souhaits par mois</a></li>
+                        <li><a href="#" class="nav-link" data-page="profil">Mon profil</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-profile">
+                    <div class="user-avatar">JD</div>
+                    <span>Jean Dupont</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Dashboard Page -->
+        <section id="dashboard" class="active-page">
+            <div class="page-title">
+                <h1>Tableau de bord</h1>
+                <p>Suivez votre progression et restez motivé pour atteindre vos objectifs</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon stat-1">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>7</h3>
+                        <p>Objectifs en cours</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon stat-2">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Objectifs atteints</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon stat-3">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>42</h3>
+                        <p>Jours de suite motivé</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon stat-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>5</h3>
+                        <p>Amis parrainés</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-title">
+                <h2>Objectifs du mois en cours</h2>
+                <p>Nous sommes après le 15 du mois, il devient urgent de finaliser vos objectifs en cours</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Rédiger un journal intime</h3>
+                        <p>Janvier - Objectif mensuel</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Écrire chaque jour quelques lignes pour mettre de l'ordre dans vos idées.</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progression</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn">Voir les détails</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Faire 10 000 pas par jour</h3>
+                        <p>Challenge connecté à la montre</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Atteindre un objectif de pas quotidien pour améliorer votre santé.</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progression</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn btn-accent">Synchroniser la montre</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Apprendre à jouer du ukulélé</h3>
+                        <p>Novembre - Objectif mensuel</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Apprendre 4 accords de base pour jouer des chansons simples.</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progression</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn">Continuer l'apprentissage</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-title">
+                <h2>Prochains défis à venir</h2>
+                <p>Préparez-vous pour les mois à venir</p>
+            </div>
+            
+            <div class="months-grid">
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Mars</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Prendre soin de soi</h4>
+                        <p>Faire plus d'exercice, mieux manger, méditer...</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Avril</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Soyez gentil</h4>
+                        <p>Des paroles aimables et pleines d'espoir</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Mai</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Faites quelque chose de nouveau</h4>
+                        <p>Cours de salsa, apprendre à crocheter...</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Objectifs Page -->
+        <section id="objectifs">
+            <div class="page-title">
+                <h1>Mes objectifs</h1>
+                <p>Fixez vos objectifs et donnez-vous les moyens de les atteindre !</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Nouvel objectif</h3>
+                        <p>Créer un challenge personnalisé</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="goal-name">Nom de l'objectif</label>
+                            <input type="text" id="goal-name" class="form-control" placeholder="Ex: Lire 10 livres cette année">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goal-month">Mois cible</label>
+                            <select id="goal-month" class="form-control">
+                                <option value="">Sélectionner un mois</option>
+                                <option value="janvier">Janvier</option>
+                                <option value="fevrier">Février</option>
+                                <option value="mars">Mars</option>
+                                <option value="avril">Avril</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="goal-type">Type d'objectif</label>
+                            <select id="goal-type" class="form-control">
+                                <option value="">Sélectionner un type</option>
+                                <option value="sante">Santé & bien-être</option>
+                                <option value="apprentissage">Apprentissage</option>
+                                <option value="social">Social & relations</option>
+                                <option value="loisir">Loisir & créativité</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-accent" style="width: 100%;">Créer l'objectif</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Compétition amicale</h3>
+                        <p>Défiez vos amis</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Créez une compétition avec vos amis pour vous motiver mutuellement.</p>
+                        <p>Choisissez un objectif commun et suivez vos progressions respectives.</p>
+                        
+                        <div class="form-group">
+                            <label for="friend-select">Sélectionnez des amis</label>
+                            <select id="friend-select" class="form-control" multiple>
+                                <option value="marie">Marie</option>
+                                <option value="pierre">Pierre</option>
+                                <option value="sophie">Sophie</option>
+                                <option value="luc">Luc</option>
+                            </select>
+                        </div>
+                        
+                        <a href="#" class="btn" style="width: 100%;">Lancer une compétition</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Parrainage</h3>
+                        <p>Inciter votre entourage à participer</p>
+                    </div>
+                    <div class="card-body">
+                        <p>Partagez votre motivation en parrainant des personnes de votre entourage.</p>
+                        <p>Vous gagnez des badges supplémentaires pour chaque personne motivée !</p>
+                        
+                        <div class="form-group">
+                            <label for="invite-email">Adresse email à inviter</label>
+                            <input type="email" id="invite-email" class="form-control" placeholder="exemple@email.com">
+                        </div>
+                        
+                        <a href="#" class="btn btn-outline" style="width: 100%;">Envoyer une invitation</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-title">
+                <h2>Mes objectifs en cours</h2>
+                <p>Suivez votre progression sur vos challenges actuels</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Rédiger un journal intime</h3>
+                        <p>65% complété - 20/31 jours</p>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Objectif :</strong> Écrire chaque jour quelques lignes dans un journal intime.</p>
+                        <p><strong>Avantages :</strong> Mettre de l'ordre dans vos idées, thérapie par l'écriture.</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progression</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <button class="btn" style="flex: 1;">Marquer comme fait</button>
+                            <button class="btn btn-outline" style="flex: 1;">Modifier</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>10 000 pas par jour</h3>
+                        <p>82% complété - 23/28 jours</p>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Objectif :</strong> Atteindre 10 000 pas chaque jour du mois.</p>
+                        <p><strong>Connecté à :</strong> Montre intelligente (Apple Watch)</p>
+                        
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progression</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 20px 0; padding: 15px; background-color: rgba(93, 106, 251, 0.1); border-radius: var(--radius);">
+                            <h4>7 892 pas aujourd'hui</h4>
+                            <p>Il vous reste 2 108 pas à faire</p>
+                        </div>
+                        
+                        <button class="btn btn-accent" style="width: 100%;">Synchroniser maintenant</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Souhaits par mois Page -->
+        <section id="mois">
+            <div class="page-title">
+                <h1>Souhaits par mois</h1>
+                <p>Découvrez les objectifs suggérés pour chaque mois de l'année</p>
+            </div>
+            
+            <div class="months-grid">
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Janvier</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Rédiger un journal intime</h4>
+                        <p>L'écriture est l'une des meilleures thérapies pour mettre de l'ordre dans vos idées.</p>
+                        <span class="month-status status-in-progress">En cours</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Février</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Redécorer la maison</h4>
+                        <p>Faire de votre maison un espace agréable pour déconnecter du reste du monde.</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Mars</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Prendre soin de soi</h4>
+                        <p>Arrêter de fumer, faire plus d'exercice, mieux manger, méditer...</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Avril</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Soyez gentil</h4>
+                        <p>Des paroles aimables et pleines d'espoir ; nous avons beaucoup en commun.</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Mai</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Faites quelque chose de nouveau</h4>
+                        <p>Marathon, cours de salsa, crochet, voyage en famille, cours d'échecs...</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Juin</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Passez du temps avec les vôtres</h4>
+                        <p>Se retrouver avec ceux qui nous aiment, week-end à la campagne, dîner en bord de mer...</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Juillet</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Aller à un concert et danser</h4>
+                        <p>Profiter des festivals d'été, danser sous les étoiles en chantant les meilleurs tubes.</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Août</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Dormir une nuit sur la plage</h4>
+                        <p>Contempler les étoiles et laisser les premiers rayons du soleil caresser votre visage.</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Septembre</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Découvrez le monde</h4>
+                        <p>Sortir de votre zone de confort, explorer de nouveaux terrains, avoir l'esprit plus ouvert.</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Octobre</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Étudiez</h4>
+                        <p>Recyclez-vous, acquérez de nouvelles connaissances, nourrissez votre curiosité.</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Novembre</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Apprendre à jouer d'un instrument</h4>
+                        <p>Le ukulélé avec quelques semaines de pratique pour apprendre des chansons simples.</p>
+                        <span class="month-status status-in-progress">En cours</span>
+                    </div>
+                </div>
+                
+                <div class="month-card">
+                    <div class="month-header">
+                        <h3>Décembre</h3>
+                    </div>
+                    <div class="month-body">
+                        <h4>Respirez consciencieusement</h4>
+                        <p>5 minutes de prise de conscience sur la façon dont vous respirez chaque jour.</p>
+                        <span class="month-status status-not-started">À venir</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Profil Page -->
+        <section id="profil">
+            <div class="page-title">
+                <h1>Mon profil</h1>
+                <p>Gérez vos informations personnelles et vos préférences</p>
+            </div>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Informations personnelles</h3>
+                        <p>Mettez à jour vos données</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="profile-name">Nom complet</label>
+                            <input type="text" id="profile-name" class="form-control" value="Jean Dupont">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-email">Adresse email</label>
+                            <input type="email" id="profile-email" class="form-control" value="jean.dupont@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-phone">Téléphone</label>
+                            <input type="tel" id="profile-phone" class="form-control" value="+33 6 12 34 56 78">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-birthdate">Date de naissance</label>
+                            <input type="date" id="profile-birthdate" class="form-control" value="1990-05-15">
+                        </div>
+                        
+                        <button class="btn" style="width: 100%;">Mettre à jour</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Préférences</h3>
+                        <p>Personnalisez votre expérience</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="notifications">Notifications</label>
+                            <select id="notifications" class="form-control">
+                                <option value="daily">Quotidiennes</option>
+                                <option value="weekly" selected>Hebdomadaires</option>
+                                <option value="monthly">Mensuelles</option>
+                                <option value="none">Aucune</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="theme">Thème de l'application</label>
+                            <select id="theme" class="form-control">
+                                <option value="light" selected>Clair</option>
+                                <option value="dark">Sombre</option>
+                                <option value="auto">Automatique</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="language">Langue</label>
+                            <select id="language" class="form-control">
+                                <option value="fr" selected>Français</option>
+                                <option value="en">Anglais</option>
+                                <option value="es">Espagnol</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="connected-device">Appareil connecté</label>
+                            <select id="connected-device" class="form-control">
+                                <option value="apple-watch" selected>Apple Watch</option>
+                                <option value="fitbit">Fitbit</option>
+                                <option value="garmin">Garmin</option>
+                                <option value="none">Aucun</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-outline" style="width: 100%;">Enregistrer les préférences</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Statistiques</h3>
+                        <p>Vos performances globales</p>
+                    </div>
+                    <div class="card-body">
+                        <div style="margin-bottom: 20px;">
+                            <h4>Objectifs complétés</h4>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>14 sur 24 objectifs</span>
+                                    <span>58%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 58%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4>Jours consécutifs actifs</h4>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Record : 42 jours</span>
+                                    <span>Actuel : 12 jours</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 28%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h4>Niveau de motivation</h4>
+                            <div class="progress-container">
+                                <div class="progress-label">
+                                    <span>Niveau 7</span>
+                                    <span>Prochain : 80%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background-color: rgba(93, 106, 251, 0.1); border-radius: var(--radius);">
+                            <h4>5 amis parrainés</h4>
+                            <p>Vous avez gagné le badge "Ambassadeur"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Réalisez vos souhaits</h3>
+                    <p>Une application mobile connectée à une montre intelligente, capable de vous rappeler continuellement vos objectifs et de vous aider à progresser.</p>
+                    <div style="margin-top: 20px;">
+                        <a href="#" class="btn" style="margin-right: 10px;">Télécharger l'app</a>
+                        <a href="#" class="btn btn-outline" style="background: transparent; color: white; border-color: white;">En savoir plus</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Comment ça marche</a></li>
+                        <li><a href="#">Témoignages</a></li>
+                        <li><a href="#">Tarifs</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> contact@realisezvossouhaits.fr</li>
+                        <li><i class="fas fa-phone"></i> +33 1 23 45 67 89</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Paris, France</li>
+                        <li><i class="fas fa-user-graduate"></i> Projet M1 Info - Mr Touati</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Appli Réalisez vos souhaits - Projet DevOps M1 Info. Tous droits réservés.</p>
+                <p style="margin-top: 10px;">Date limite de dépôt sur TEAMS : 4 Décembre 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation between pages
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all pages
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.remove('active-page');
+                });
+                
+                // Show selected page
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active-page');
+            });
+        });
+
+        // Simulate progress update for demonstration
+        function updateProgress() {
+            const progressFill = document.querySelector('.card:nth-child(2) .progress-fill');
+            const currentWidth = parseInt(progressFill.style.width);
+            const newWidth = Math.min(currentWidth + 5, 100);
+            progressFill.style.width = newWidth + '%';
+            
+            // Update percentage text
+            const progressLabel = document.querySelector('.card:nth-child(2) .progress-label span:last-child');
+            progressLabel.textContent = newWidth + '%';
+            
+            // Update step count
+            const stepCount = document.querySelector('.card:nth-child(2) h4');
+            const newSteps = 7892 + Math.floor(Math.random() * 500);
+            stepCount.textContent = newSteps.toLocaleString() + ' pas aujourd\'hui';
+            
+            // Update remaining steps
+            const remaining = document.querySelector('.card:nth-child(2) p');
+            remaining.textContent = `Il vous reste ${(10000 - newSteps).toLocaleString()} pas à faire`;
+        }
+
+        // Add event listener to sync button
+        document.addEventListener('DOMContentLoaded', function() {
+            const syncBtn = document.querySelector('.btn-accent');
+            if(syncBtn) {
+                syncBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    updateProgress();
+                    this.textContent = 'Synchronisé ✓';
+                    this.style.backgroundColor = '#4cd964';
+                    
+                    setTimeout(() => {
+                        this.textContent = 'Synchroniser la montre';
+                        this.style.backgroundColor = '';
+                    }, 2000);
+                });
+            }
+            
+            // Mark goal as completed
+            const completeBtn = document.querySelector('.btn:first-child');
+            if(completeBtn && completeBtn.textContent === 'Marquer comme fait') {
+                completeBtn.addEventListener('click', function() {
+                    const cardHeader = this.closest('.card').querySelector('.card-header h3');
+                    const originalText = cardHeader.textContent;
+                    cardHeader.innerHTML = originalText + ' <i class="fas fa-check" style="color: var(--success);"></i>';
+                    this.textContent = 'Terminé ✓';
+                    this.style.backgroundColor = '#4cd964';
+                    
+                    // Update progress bar to 100%
+                    const progressFill = this.closest('.card').querySelector('.progress-fill');
+                    progressFill.style.width = '100%';
+                    
+                    // Update percentage text
+                    const progressLabel = this.closest('.card').querySelector('.progress-label span:last-child');
+                    progressLabel.textContent = '100%';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

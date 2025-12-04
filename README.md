@@ -7,6 +7,7 @@ Une fois dans le bon emplacement, tapez cette commande dans votre git bash:
 
 Puis dans le CMD lié à cet emplacement, tapez: 
 > npm install 
+
 > npm run 
 
 Cliquez sur le lien suivant: 

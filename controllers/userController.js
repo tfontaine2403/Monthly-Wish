@@ -51,7 +51,7 @@ const userController = {
         success: false,
         error: 'Erreur lors de la mise à jour du profil'
       });
-    }
+
   },
 
 
